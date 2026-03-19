@@ -1,156 +1,130 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AkshatTube 🔥</title>
+  <title>VideoHub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
-    body {
-      margin: 0;
-      font-family: Arial;
-      background: #0f0f0f;
-      color: white;
-    }
+    body { margin:0; font-family:Arial; background:#0f0f0f; color:white; }
 
     header {
-      background: #111;
-      padding: 15px;
-      text-align: center;
-      font-size: 22px;
-      font-weight: bold;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:15px 20px; background:#111; position:sticky; top:0;
     }
 
-    .search-box {
-      text-align: center;
-      margin: 20px;
+    .logo { font-size:20px; font-weight:bold; }
+
+    .search input {
+      padding:8px; border:none; border-radius:5px; width:200px;
     }
 
-    input {
-      padding: 10px;
-      width: 300px;
-      border-radius: 5px;
-      border: none;
-    }
-
-    .videos {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
+    .grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
+      gap:20px;
+      padding:20px;
     }
 
     .card {
-      background: #1c1c1c;
-      padding: 10px;
-      border-radius: 10px;
-      width: 300px;
+      background:#1c1c1c;
+      border-radius:10px;
+      overflow:hidden;
+      transition:0.3s;
     }
 
-    video {
-      width: 100%;
-      border-radius: 10px;
-    }
+    .card:hover { transform:scale(1.05); }
 
-    .title {
-      margin-top: 8px;
-      font-size: 16px;
-    }
+    video { width:100%; }
 
-    /* AGE POPUP */
-    #agePopup {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.95);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
+    .title { padding:10px; font-size:14px; }
+
+    /* Popup */
+    #popup {
+      position:fixed; top:0; left:0;
+      width:100%; height:100%;
+      background:rgba(0,0,0,0.9);
+      display:flex; justify-content:center; align-items:center;
+      z-index:999;
     }
 
     .box {
-      background: #222;
-      padding: 30px;
-      border-radius: 10px;
-      text-align: center;
+      background:#222;
+      padding:30px;
+      border-radius:10px;
+      text-align:center;
     }
 
     button {
-      margin: 10px;
-      padding: 10px 20px;
-      border: none;
-      cursor: pointer;
+      padding:10px 20px;
+      margin:10px;
+      border:none;
+      cursor:pointer;
     }
 
-    .yes { background: green; color: white; }
-    .no { background: red; color: white; }
-
+    .yes { background:green; color:white; }
+    .no { background:red; color:white; }
   </style>
 </head>
 
 <body>
 
-<header>🔥 AkshatTube</header>
+<header>
+  <div class="logo">🎬 VideoHub</div>
+  <div class="search">
+    <input type="text" placeholder="Search..." onkeyup="searchVideos(this.value)">
+  </div>
+</header>
 
-<div class="search-box">
-  <input type="text" id="search" placeholder="Search videos..." onkeyup="searchVideos()">
-</div>
-
-<div class="videos" id="videoList">
+<div class="grid" id="videos">
 
   <div class="card">
     <video controls>
-      <source src="video1.mp4" type="video/mp4">
+      <source src="video1.mp4">
     </video>
     <div class="title">Sample Video 1</div>
   </div>
 
   <div class="card">
     <video controls>
-      <source src="video2.mp4" type="video/mp4">
+      <source src="video2.mp4">
     </video>
     <div class="title">Sample Video 2</div>
   </div>
 
 </div>
 
-<!-- AGE POPUP -->
-<div id="agePopup">
+<!-- Age Gate -->
+<div id="popup">
   <div class="box">
-    <h2>Age Verification</h2>
-    <p>18+ only</p>
-    <button class="yes" onclick="enterSite()">I am 18+</button>
-    <button class="no" onclick="exitSite()">Exit</button>
+    <h2>Access Check</h2>
+    <p>Please confirm you are allowed to view this site.</p>
+    <button class="yes" onclick="enter()">Continue</button>
+    <button class="no" onclick="exit()">Exit</button>
   </div>
 </div>
 
 <script>
-
-function searchVideos() {
-  let input = document.getElementById("search").value.toLowerCase();
-  let cards = document.getElementsByClassName("card");
-
-  for (let i = 0; i < cards.length; i++) {
-    let title = cards[i].innerText.toLowerCase();
-    cards[i].style.display = title.includes(input) ? "block" : "none";
+function searchVideos(q){
+  let cards=document.getElementsByClassName("card");
+  q=q.toLowerCase();
+  for(let i=0;i<cards.length;i++){
+    let t=cards[i].innerText.toLowerCase();
+    cards[i].style.display=t.includes(q)?"block":"none";
   }
 }
 
-// AGE SYSTEM
-if(localStorage.getItem("ageVerified") === "true"){
-  document.getElementById("agePopup").style.display = "none";
+if(localStorage.getItem("ok")==="yes"){
+  document.getElementById("popup").style.display="none";
 }
 
-function enterSite() {
-  localStorage.setItem("ageVerified", "true");
-  document.getElementById("agePopup").style.display = "none";
+function enter(){
+  localStorage.setItem("ok","yes");
+  document.getElementById("popup").style.display="none";
 }
 
-function exitSite() {
-  window.location.href = "https://www.google.com";
+function exit(){
+  window.location.href="https://www.google.com";
 }
-
 </script>
 
 </body>

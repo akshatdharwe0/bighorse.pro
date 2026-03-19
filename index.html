@@ -12,4 +12,83 @@
 </video>
 
 </body>
+  <!DOCTYPE html>
+<html>
+<head>
+  <title>Akshat Site</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+    }
+
+    /* Blur background */
+    .blur {
+      filter: blur(8px);
+    }
+
+    /* Popup */
+    #agePopup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      z-index: 9999;
+    }
+
+    .box {
+      background: #111;
+      padding: 30px;
+      text-align: center;
+      border-radius: 10px;
+    }
+
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .yes { background: green; color: white; }
+    .no { background: red; color: white; }
+  </style>
+</head>
+
+<body>
+
+<!-- MAIN CONTENT -->
+<div id="mainContent">
+  <h1 style="text-align:center;">🔥 My Website</h1>
+</div>
+
+<!-- AGE POPUP -->
+<div id="agePopup">
+  <div class="box">
+    <h2>Age Verification</h2>
+    <p>Are you 18 or older?</p>
+    <button class="yes" onclick="enterSite()">I am 18+</button>
+    <button class="no" onclick="exitSite()">I am under 18</button>
+  </div>
+</div>
+
+<script>
+function enterSite() {
+  document.getElementById("agePopup").style.display = "none";
+}
+
+function exitSite() {
+  window.location.href = "https://www.google.com";
+}
+</script>
+
+</body>
+</html>
 </html>

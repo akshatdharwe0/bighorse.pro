@@ -1,112 +1,156 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Akshat Site</title>
+  <title>AkshatTube 🔥</title>
 
   <style>
     body {
       margin: 0;
       font-family: Arial;
-      background: black;
+      background: #0f0f0f;
       color: white;
     }
 
-    /* Blur effect */
-    .blur {
-      filter: blur(8px);
-      pointer-events: none;
+    header {
+      background: #111;
+      padding: 15px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
     }
 
-    /* Popup background */
+    .search-box {
+      text-align: center;
+      margin: 20px;
+    }
+
+    input {
+      padding: 10px;
+      width: 300px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    .videos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .card {
+      background: #1c1c1c;
+      padding: 10px;
+      border-radius: 10px;
+      width: 300px;
+    }
+
+    video {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .title {
+      margin-top: 8px;
+      font-size: 16px;
+    }
+
+    /* AGE POPUP */
     #agePopup {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.9);
+      background: rgba(0,0,0,0.95);
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 9999;
     }
 
-    /* Popup box */
     .box {
-      background: rgba(255,255,255,0.05);
+      background: #222;
       padding: 30px;
-      border-radius: 15px;
+      border-radius: 10px;
       text-align: center;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 20px rgba(255,255,255,0.2);
-    }
-
-    h2 {
-      margin-bottom: 10px;
-    }
-
-    p {
-      opacity: 0.8;
     }
 
     button {
       margin: 10px;
-      padding: 12px 20px;
+      padding: 10px 20px;
       border: none;
       cursor: pointer;
-      border-radius: 5px;
-      font-size: 16px;
     }
 
-    .yes {
-      background: #00c853;
-      color: white;
-    }
+    .yes { background: green; color: white; }
+    .no { background: red; color: white; }
 
-    .no {
-      background: #d50000;
-      color: white;
-    }
   </style>
 </head>
 
 <body>
 
-<!-- MAIN CONTENT -->
-<div id="mainContent">
-  <h1 style="text-align:center; padding-top:50px;">
-    🔥 Welcome to My Website
-  </h1>
+<header>🔥 AkshatTube</header>
+
+<div class="search-box">
+  <input type="text" id="search" placeholder="Search videos..." onkeyup="searchVideos()">
+</div>
+
+<div class="videos" id="videoList">
+
+  <div class="card">
+    <video controls>
+      <source src="video1.mp4" type="video/mp4">
+    </video>
+    <div class="title">Sample Video 1</div>
+  </div>
+
+  <div class="card">
+    <video controls>
+      <source src="video2.mp4" type="video/mp4">
+    </video>
+    <div class="title">Sample Video 2</div>
+  </div>
+
 </div>
 
 <!-- AGE POPUP -->
 <div id="agePopup">
   <div class="box">
     <h2>Age Verification</h2>
-    <p>You must be 18+ to enter this site.</p>
-
+    <p>18+ only</p>
     <button class="yes" onclick="enterSite()">I am 18+</button>
-    <button class="no" onclick="exitSite()">I am under 18</button>
+    <button class="no" onclick="exitSite()">Exit</button>
   </div>
 </div>
 
 <script>
-  // Check if already verified
-  if(localStorage.getItem("ageVerified") === "true"){
-    document.getElementById("agePopup").style.display = "none";
-  } else {
-    document.getElementById("mainContent").classList.add("blur");
-  }
 
-  function enterSite() {
-    localStorage.setItem("ageVerified", "true");
-    document.getElementById("agePopup").style.display = "none";
-    document.getElementById("mainContent").classList.remove("blur");
-  }
+function searchVideos() {
+  let input = document.getElementById("search").value.toLowerCase();
+  let cards = document.getElementsByClassName("card");
 
-  function exitSite() {
-    window.location.href = "https://www.google.com";
+  for (let i = 0; i < cards.length; i++) {
+    let title = cards[i].innerText.toLowerCase();
+    cards[i].style.display = title.includes(input) ? "block" : "none";
   }
+}
+
+// AGE SYSTEM
+if(localStorage.getItem("ageVerified") === "true"){
+  document.getElementById("agePopup").style.display = "none";
+}
+
+function enterSite() {
+  localStorage.setItem("ageVerified", "true");
+  document.getElementById("agePopup").style.display = "none";
+}
+
+function exitSite() {
+  window.location.href = "https://www.google.com";
+}
+
 </script>
 
 </body>

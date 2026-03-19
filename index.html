@@ -1,64 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Akshat Player</title>
-</head>
-<body style="background:black; color:white; text-align:center;">
-
-<h1>🔥 My Video Player</h1>
-
-<video width="600" controls>
-  <source src="video.mp4" type="video/mp4">
-</video>
-
-</body>
-  <!DOCTYPE html>
-<html>
-<head>
   <title>Akshat Site</title>
 
   <style>
     body {
       margin: 0;
       font-family: Arial;
+      background: black;
+      color: white;
     }
 
-    /* Blur background */
+    /* Blur effect */
     .blur {
       filter: blur(8px);
+      pointer-events: none;
     }
 
-    /* Popup */
+    /* Popup background */
     #agePopup {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.8);
+      background: rgba(0,0,0,0.9);
       display: flex;
       justify-content: center;
       align-items: center;
-      color: white;
       z-index: 9999;
     }
 
+    /* Popup box */
     .box {
-      background: #111;
+      background: rgba(255,255,255,0.05);
       padding: 30px;
+      border-radius: 15px;
       text-align: center;
-      border-radius: 10px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(255,255,255,0.2);
+    }
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      opacity: 0.8;
     }
 
     button {
       margin: 10px;
-      padding: 10px 20px;
+      padding: 12px 20px;
       border: none;
       cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
     }
 
-    .yes { background: green; color: white; }
-    .no { background: red; color: white; }
+    .yes {
+      background: #00c853;
+      color: white;
+    }
+
+    .no {
+      background: #d50000;
+      color: white;
+    }
   </style>
 </head>
 
@@ -66,29 +74,40 @@
 
 <!-- MAIN CONTENT -->
 <div id="mainContent">
-  <h1 style="text-align:center;">🔥 My Website</h1>
+  <h1 style="text-align:center; padding-top:50px;">
+    🔥 Welcome to My Website
+  </h1>
 </div>
 
 <!-- AGE POPUP -->
 <div id="agePopup">
   <div class="box">
     <h2>Age Verification</h2>
-    <p>Are you 18 or older?</p>
+    <p>You must be 18+ to enter this site.</p>
+
     <button class="yes" onclick="enterSite()">I am 18+</button>
     <button class="no" onclick="exitSite()">I am under 18</button>
   </div>
 </div>
 
 <script>
-function enterSite() {
-  document.getElementById("agePopup").style.display = "none";
-}
+  // Check if already verified
+  if(localStorage.getItem("ageVerified") === "true"){
+    document.getElementById("agePopup").style.display = "none";
+  } else {
+    document.getElementById("mainContent").classList.add("blur");
+  }
 
-function exitSite() {
-  window.location.href = "https://www.google.com";
-}
+  function enterSite() {
+    localStorage.setItem("ageVerified", "true");
+    document.getElementById("agePopup").style.display = "none";
+    document.getElementById("mainContent").classList.remove("blur");
+  }
+
+  function exitSite() {
+    window.location.href = "https://www.google.com";
+  }
 </script>
 
 </body>
-</html>
 </html>
